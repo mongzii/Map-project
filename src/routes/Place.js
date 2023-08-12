@@ -1,8 +1,13 @@
 // import axios from "axios";
 // import { useEffect } from "react";
-import markerdata from "../data.js";
+import { useState } from "react";
+import markerdata from "../data";
+
+// import selectMarket from "../selectMarket.js";
 import styled from "styled-components";
 import Map from "./Map.js";
+import { useDispatch } from "react-redux";
+import { setMarker } from "../redux/store.js";
 
 const TotalStyled = styled.section`
   border: 5px solid black;
@@ -27,22 +32,44 @@ const MapTitleStyled = styled.div`
 `;
 
 const MapBodyStyled = styled.div`
-  /* border: 5px solid blue; */
+  border: 5px solid blue;
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   flex-grow: 6.5;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  > button {
+    width: 200px;
+  }
 `;
 
 function Place() {
-  //console.log(markerdata);
+  console.log(markerdata);
+
+  const [shoplist, setShopList] = useState([]);
+  const [select, setSelect] = useState(null);
+  // const [selectedMarker, setSelectedMarker] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const handleMarkerClick = markerInfo => {
+    dispatch(setMarker(markerInfo));
+  };
+
+  const handleSelect = () => {
+    // setSelect(select);
+    // dispatch(setMarker(select));
+    // console.log(select);
+    console.log("선택되었다");
+  };
+
   return (
     <>
       <TotalStyled>
         <MapTitleStyled>지도의 원하는 지점을 클릭해주세요</MapTitleStyled>
         <MapBodyStyled>
-          <Map />
+          <Map onMarkerClick={handleMarkerClick} />
+          <button onClick={handleSelect}>선 택</button>
         </MapBodyStyled>
       </TotalStyled>
     </>
