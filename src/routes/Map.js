@@ -59,7 +59,7 @@ function Map() {
 
       const content =
         '<div className="overlayContainer" style="background-color: white; border:3px solid black">' +
-        `<div style="color: black;" >${el.name}</div>` +
+        `<div style="color: black;" >${el.title}</div>` +
         `<div className="shopPhone">${el.phone}</div>` +
         "</div>";
 

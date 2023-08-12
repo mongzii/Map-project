@@ -6,7 +6,7 @@ function Home() {
   return (
     <>
       <span>Home이다</span>
-      <button onClick={() => navigator("/Map-project/map")}>지도</button>
+      <button onClick={() => navigator("/Map-project/place")}>지도</button>
     </>
   );
 }
