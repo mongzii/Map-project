@@ -83,7 +83,7 @@ function Map() {
   return (
     <>
       <div id="map" style={{ width: "800px", height: "500px" }}></div>;
-      {console.log(markerdata)}
+      {/* {console.log(markerdata)} */}
     </>
   );
 }
