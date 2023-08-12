@@ -1,4 +1,8 @@
 function Home() {
-  return <>Home이다.</>;
+  return (
+    <>
+      <span>Home이다</span>
+    </>
+  );
 }
 export default Home;
