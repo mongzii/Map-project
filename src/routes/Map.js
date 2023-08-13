@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 // import markerdata from "../data.js";
 
-function MapComponent({ shoplist }) {
+function MapComponent({ shoplist, setSelect }) {
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
@@ -75,9 +75,9 @@ function MapComponent({ shoplist }) {
       window.kakao.maps.event.addListener(marker, "mouseout", () => {
         customOverlay.setMap(null);
       });
-      // window.kakao.maps.event.addListener(marker, "click", () => {
-      //   setSelect(el);
-      // });
+      window.kakao.maps.event.addListener(marker, "click", () => {
+        setSelect(el);
+      });
     });
   }, [shoplist]);
   return (

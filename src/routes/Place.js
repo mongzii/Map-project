@@ -1,8 +1,8 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import axios from "axios";
 import styled from "styled-components";
-// import Map from "./Map.js";
-// import markerdata from "../data.js";
+import { useDispatch } from "react-redux";
+import { setMarker } from "../redux/store.js";
 
 const MapComponent = lazy(() => import("./Map.js"));
 
@@ -43,6 +43,8 @@ const MapBodyStyled = styled.div`
 function Place() {
   // console.log(markerdata);
   const [shoplist, setShoplist] = useState([]);
+  const dispatch = useDispatch();
+  const [select, setSelect] = useState("");
 
   const markerGroup = () => {
     axios
@@ -57,15 +59,25 @@ function Place() {
     markerGroup();
   }, []);
 
+  const handleSelect = () => {
+    dispatch(setMarker(select));
+  };
+
   return (
     <>
       <TotalStyled>
-        <MapTitleStyled>지도의 원하는 지점을 클릭해주세요</MapTitleStyled>
+        <MapTitleStyled>
+          {select && select.title !== null ? (
+            <p>{select.title}</p>
+          ) : (
+            <p>지도의 원하는 지점을 클릭해주세요</p>
+          )}
+        </MapTitleStyled>
         <MapBodyStyled>
           <Suspense fallback={<div>loading</div>}>
-            <MapComponent shoplist={shoplist} />
+            <MapComponent shoplist={shoplist} setSelect={setSelect} />
           </Suspense>
-          <button>선 택</button>
+          <button onClick={handleSelect}>선 택</button>
         </MapBodyStyled>
       </TotalStyled>
     </>
