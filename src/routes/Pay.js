@@ -2,14 +2,14 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const MainStyle = styled.div`
-  /* border: 10px solid black; */
+  border: 1px solid black;
   background-color: #f1f0e8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-size: 20px;
   > button {
     background-color: #daf5ff;
@@ -26,16 +26,17 @@ const MainStyle = styled.div`
   }
 `;
 
-function Home() {
+function Pay() {
   const navigator = useNavigate();
 
   return (
     <>
       <MainStyle>
-        <span>👇밑의 버튼을 제발 눌러주세요👇</span>
-        <button onClick={() => navigator("/Map-project/place")}>지도</button>
+        원래 결제창이 뜹니다.....😭😭😭
+        <button onClick={() => navigator("/Map-project")}>Home</button>
       </MainStyle>
     </>
   );
 }
-export default Home;
+
+export default Pay;

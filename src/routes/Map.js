@@ -82,7 +82,7 @@ function MapComponent({ shoplist, setSelect }) {
   }, [shoplist]);
   return (
     <>
-      <div id="map" style={{ width: "800px", height: "500px" }}></div>;
+      <div id="map" style={{ width: "800px", height: "500px" }}></div>
       {/* {console.log(markerdata)} */}
       {/* {console.log(shoplist)} */}
     </>

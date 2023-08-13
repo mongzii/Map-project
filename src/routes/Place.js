@@ -1,5 +1,6 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { setMarker } from "../redux/store.js";
@@ -7,7 +8,9 @@ import { setMarker } from "../redux/store.js";
 const MapComponent = lazy(() => import("./Map.js"));
 
 const TotalStyled = styled.section`
-  border: 5px solid black;
+  /* background-color: #f8f0e5; */
+  background-color: #f1f0e8;
+  /* border: 5px solid black; */
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -29,14 +32,24 @@ const MapTitleStyled = styled.div`
 `;
 
 const MapBodyStyled = styled.div`
-  border: 5px solid blue;
+  /* border: 5px solid blue; */
   display: flex;
   flex-direction: column;
   flex-grow: 6.5;
   align-items: center;
   justify-content: center;
   > button {
-    width: 200px;
+    width: 220px;
+    height: 35px;
+    border-radius: 3px;
+    border: 1px solid white;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  > button:hover {
+    /* background-color: #b8e7e1; */
+    background-color: #75c2f6;
   }
 `;
 
@@ -45,6 +58,8 @@ function Place() {
   const [shoplist, setShoplist] = useState([]);
   const dispatch = useDispatch();
   const [select, setSelect] = useState("");
+
+  const navigator = useNavigate();
 
   const markerGroup = () => {
     axios
@@ -61,6 +76,7 @@ function Place() {
 
   const handleSelect = () => {
     dispatch(setMarker(select));
+    navigator("/Map-project/pay");
   };
 
   return (
@@ -70,7 +86,7 @@ function Place() {
           {select && select.title !== null ? (
             <p>{select.title}</p>
           ) : (
-            <p>지도의 원하는 지점을 클릭해주세요</p>
+            <p>픽업 매장을 선택하세요</p>
           )}
         </MapTitleStyled>
         <MapBodyStyled>
