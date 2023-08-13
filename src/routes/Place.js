@@ -1,13 +1,10 @@
-// import axios from "axios";
-// import { useEffect } from "react";
-import { useState } from "react";
-import markerdata from "../data";
-
-// import selectMarket from "../selectMarket.js";
+import { useEffect, useState, lazy, Suspense } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import Map from "./Map.js";
-import { useDispatch } from "react-redux";
-import { setMarker } from "../redux/store.js";
+import markerdata from "../data.js";
+
+const MapComponent = lazy(() => import("./Map.js"));
 
 const TotalStyled = styled.section`
   border: 5px solid black;
@@ -44,32 +41,31 @@ const MapBodyStyled = styled.div`
 `;
 
 function Place() {
-  console.log(markerdata);
-
-  const [shoplist, setShopList] = useState([]);
-  const [select, setSelect] = useState(null);
-  // const [selectedMarker, setSelectedMarker] = useState(null);
-
-  const dispatch = useDispatch();
-
-  const handleMarkerClick = markerInfo => {
-    dispatch(setMarker(markerInfo));
-  };
-
+  // console.log(markerdata);
+  const [shoplist, setShoplist] = useState([]);
   const handleSelect = () => {
-    // setSelect(select);
-    // dispatch(setMarker(select));
-    // console.log(select);
-    console.log("선택되었다");
+    axios.get(`http://localhost:8080/place`).then(res => {
+      // console.log(res.data.dummyData); //여기에 데이터가 배열로 들어있다.
+      setShoplist(res.data.dummyData); //
+    });
+    // console.log("선택되었다");
   };
+  useEffect(() => {
+    handleSelect();
+  }, []);
 
   return (
     <>
       <TotalStyled>
         <MapTitleStyled>지도의 원하는 지점을 클릭해주세요</MapTitleStyled>
         <MapBodyStyled>
-          <Map onMarkerClick={handleMarkerClick} />
-          <button onClick={handleSelect}>선 택</button>
+          <Suspense fallback={<div>loading</div>}>
+            <MapComponent shoplist={shoplist} />
+          </Suspense>
+          {/* <Map shoplist={shoplist} /> */}
+          {/* <button onClick={handleSelect}>선 택</button> */}
+          <button>선 택</button>
+          {/* {console.log(shoplist)} */}
         </MapBodyStyled>
       </TotalStyled>
     </>

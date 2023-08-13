@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import markerdata from "../data.js";
+// import markerdata from "../data.js";
 
-function Map() {
+function MapComponent({ shoplist }) {
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
@@ -49,8 +49,8 @@ function Map() {
       infowindow.open(map, marker);
       map.setCenter(locPosition);
     }
-
-    markerdata.forEach(el => {
+    // console.log(shoplist);
+    shoplist.forEach(el => {
       const marker = new window.kakao.maps.Marker({
         map: map,
         position: new window.kakao.maps.LatLng(el.lat, el.lng),
@@ -79,12 +79,13 @@ function Map() {
       //   setSelect(el);
       // });
     });
-  }, []);
+  }, [shoplist]);
   return (
     <>
       <div id="map" style={{ width: "800px", height: "500px" }}></div>;
       {/* {console.log(markerdata)} */}
+      {/* {console.log(shoplist)} */}
     </>
   );
 }
-export default Map;
+export default MapComponent;
