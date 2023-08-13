@@ -1,8 +1,8 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import Map from "./Map.js";
-import markerdata from "../data.js";
+// import Map from "./Map.js";
+// import markerdata from "../data.js";
 
 const MapComponent = lazy(() => import("./Map.js"));
 
@@ -43,15 +43,18 @@ const MapBodyStyled = styled.div`
 function Place() {
   // console.log(markerdata);
   const [shoplist, setShoplist] = useState([]);
-  const handleSelect = () => {
-    axios.get(`http://localhost:8080/place`).then(res => {
-      // console.log(res.data.dummyData); //여기에 데이터가 배열로 들어있다.
-      setShoplist(res.data.dummyData); //
-    });
-    // console.log("선택되었다");
+
+  const markerGroup = () => {
+    axios
+      .get(`http://localhost:8080/place`)
+      .then(res => {
+        // console.log(res.data.dummyData); //여기에 데이터가 배열로 들어있다.
+        setShoplist(res.data.dummyData); //
+      })
+      .catch(err => console.log(err));
   };
   useEffect(() => {
-    handleSelect();
+    markerGroup();
   }, []);
 
   return (
@@ -62,10 +65,7 @@ function Place() {
           <Suspense fallback={<div>loading</div>}>
             <MapComponent shoplist={shoplist} />
           </Suspense>
-          {/* <Map shoplist={shoplist} /> */}
-          {/* <button onClick={handleSelect}>선 택</button> */}
           <button>선 택</button>
-          {/* {console.log(shoplist)} */}
         </MapBodyStyled>
       </TotalStyled>
     </>
